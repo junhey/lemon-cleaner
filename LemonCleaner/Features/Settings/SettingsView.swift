@@ -20,7 +20,7 @@ struct SettingsView: View {
                 }
             }
             Section("About") {
-                LabeledContent("Version", value: "0.0.5")
+                LabeledContent("Version", value: "0.0.6")
                 LabeledContent("App", value: "Airy")
                 LabeledContent("Bundle ID", value: "com.junhey.Airy")
             }

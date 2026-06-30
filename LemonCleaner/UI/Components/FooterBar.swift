@@ -7,12 +7,12 @@ struct FooterBar: View {
     var body: some View {
         HStack {
             SettingsMenu()
-            Spacer()
+            Spacer(minLength: 8)
             Button(action: onLaunch) {
                 Text("Open Airy")
                     .font(.system(size: 13, weight: .medium))
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 5)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 4)
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(Color.white)
@@ -20,10 +20,9 @@ struct FooterBar: View {
                     )
             }
             .buttonStyle(.plain)
-            Spacer()
         }
         .padding(.horizontal, AppTheme.panelHorizontalPadding)
-        .padding(.vertical, 8)
+        .padding(.vertical, 6)
         .background(AppTheme.footerBackground)
     }
 }
@@ -31,6 +30,7 @@ struct FooterBar: View {
 struct SettingsMenu: View {
     var body: some View {
         SettingsMenuButton()
+            .fixedSize()
     }
 }
 
@@ -42,9 +42,10 @@ private struct SettingsMenuButton: NSViewRepresentable {
     func makeNSView(context: Context) -> NSView {
         let container = NSView(frame: .zero)
         let button = NSButton(frame: .zero)
+        button.title = ""
         button.bezelStyle = .inline
         button.isBordered = false
-        button.imagePosition = .imageLeft
+        button.imagePosition = .imageOnly
         button.target = context.coordinator
         button.action = #selector(Coordinator.showMenu(_:))
         button.image = menuBarImage()
@@ -57,6 +58,8 @@ private struct SettingsMenuButton: NSViewRepresentable {
             button.topAnchor.constraint(equalTo: container.topAnchor),
             button.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ])
+        container.setContentHuggingPriority(.required, for: .horizontal)
+        container.setContentCompressionResistancePriority(.required, for: .horizontal)
         context.coordinator.button = button
         return container
     }

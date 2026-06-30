@@ -16,7 +16,9 @@ struct AiryApp: App {
 
         WindowGroup("Airy", id: "main") {
             MainDashboardView()
+                .background(MainWindowOpenActionRegistrar())
         }
+        .handlesExternalEvents(matching: ["open-main"])
         .defaultSize(width: 800, height: 520)
 
         Settings {

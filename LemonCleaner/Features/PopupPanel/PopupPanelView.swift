@@ -52,7 +52,6 @@ final class PopupPanelViewModel: ObservableObject {
 
 struct PopupPanelView: View {
     @EnvironmentObject private var monitor: SystemMonitorService
-    @Environment(\.openWindow) private var openWindow
     @StateObject private var viewModel = PopupPanelViewModel()
 
     var body: some View {
@@ -69,7 +68,7 @@ struct PopupPanelView: View {
             }
             .frame(maxHeight: .infinity)
 
-            FooterBar(onLaunch: { openWindow(id: "main") })
+            FooterBar(onLaunch: MainWindowPresenter.present)
         }
         .frame(width: AppTheme.panelWidth, height: AppTheme.panelHeight)
         .background(AppTheme.panelBackground)
