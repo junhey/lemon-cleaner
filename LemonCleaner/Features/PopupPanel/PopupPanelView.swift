@@ -5,7 +5,10 @@ final class PopupPanelViewModel: ObservableObject {
     @Published var selectedTab: PopupTab = .freeUp
     @Published var showCleanConfirm = false
     @Published var showCleanResult = false
-    @Published var cleanResultMessage = ""
+    @Published var cleanResultBytes: Int64 = 0
+    @Published var cleanResultFailed = false
+    @Published var cleanResultError = ""
+    @Published var showReleaseResult = false
     @Published var isCleaning = false
 
     let diskScan = DiskScanService()
@@ -20,23 +23,30 @@ final class PopupPanelViewModel: ObservableObject {
         }
     }
 
+    func startProcessRefresh() {
+        processMemory.refresh()
+    }
+
     func clean() async {
         guard let result = diskScan.result else { return }
         isCleaning = true
         defer { isCleaning = false }
         do {
             let freed = try await cacheClean.clean(items: result.allItems)
-            cleanResultMessage = "Recovered \(ByteFormatter.format(freed))"
+            cleanResultBytes = freed
+            cleanResultFailed = false
             showCleanResult = true
             await diskScan.scan()
         } catch {
-            cleanResultMessage = "Clean failed: \(error.localizedDescription)"
+            cleanResultFailed = true
+            cleanResultError = error.localizedDescription
             showCleanResult = true
         }
     }
 
     func releaseMemory() async {
         await processMemory.releaseMemory()
+        showReleaseResult = true
     }
 }
 
@@ -66,10 +76,21 @@ struct PopupPanelView: View {
         .clipShape(RoundedRectangle(cornerRadius: AppTheme.panelCornerRadius, style: .continuous))
         .shadow(color: AppTheme.cardShadow, radius: 12, y: 4)
         .onAppear { viewModel.onAppear(monitor: monitor) }
-        .alert("Clean Complete", isPresented: $viewModel.showCleanResult) {
+        .task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(3))
+                viewModel.startProcessRefresh()
+            }
+        }
+        .alert(cleanAlertTitle, isPresented: $viewModel.showCleanResult) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(viewModel.cleanResultMessage)
+            Text(cleanAlertMessage)
+        }
+        .alert("Memory Released", isPresented: $viewModel.showReleaseResult) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(viewModel.processMemory.lastReleaseMessage ?? "Done.")
         }
         .confirmationDialog("Clean recoverable files?", isPresented: $viewModel.showCleanConfirm) {
             Button("Clean", role: .destructive) {
@@ -77,5 +98,16 @@ struct PopupPanelView: View {
             }
             Button("Cancel", role: .cancel) {}
         }
+    }
+
+    private var cleanAlertTitle: String {
+        viewModel.cleanResultFailed ? "Clean Failed" : ByteFormatter.format(viewModel.cleanResultBytes)
+    }
+
+    private var cleanAlertMessage: String {
+        if viewModel.cleanResultFailed {
+            return viewModel.cleanResultError
+        }
+        return "Files moved to Trash."
     }
 }

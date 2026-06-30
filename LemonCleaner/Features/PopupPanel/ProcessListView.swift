@@ -14,30 +14,30 @@ struct ProcessListView: View {
                         .foregroundStyle(.secondary)
                     Spacer()
                 }
-                .padding(.vertical, 16)
+                .padding(.vertical, 12)
             } else {
                 ForEach(apps) { app in
-                    HStack(spacing: 10) {
+                    HStack(spacing: 8) {
                         if let icon = app.icon {
                             Image(nsImage: icon)
                                 .resizable()
-                                .frame(width: 24, height: 24)
+                                .frame(width: 22, height: 22)
                         } else {
                             Image(systemName: "app.fill")
-                                .frame(width: 24, height: 24)
+                                .frame(width: 22, height: 22)
                                 .foregroundStyle(.secondary)
                         }
                         Text(app.name)
-                            .font(.system(size: 13))
+                            .font(.system(size: 12))
                             .lineLimit(1)
                         Spacer()
                         Text(ByteFormatter.format(app.memoryBytes))
-                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
                             .foregroundStyle(.secondary)
                             .monospacedDigit()
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 6)
+                    .padding(.horizontal, AppTheme.panelHorizontalPadding)
+                    .padding(.vertical, 5)
                 }
             }
         }

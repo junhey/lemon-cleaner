@@ -9,7 +9,7 @@ struct TabHeader: View {
                 Button {
                     selectedTab = tab
                 } label: {
-                    VStack(spacing: 4) {
+                    VStack(spacing: 3) {
                         Text(tab.title)
                             .font(.system(size: 13, weight: selectedTab == tab ? .semibold : .regular))
                             .foregroundStyle(selectedTab == tab ? .primary : .secondary)
@@ -22,7 +22,7 @@ struct TabHeader: View {
             }
             Spacer()
         }
-        .padding(.horizontal, 14)
+        .padding(.horizontal, AppTheme.panelHorizontalPadding)
         .padding(.top, 6)
     }
 }

@@ -18,9 +18,10 @@ final class ByteFormatterTests: XCTestCase {
     }
 
     func testFormatCompactSpeed() {
-        XCTAssertEqual(ByteFormatter.formatCompactSpeed(512), "512")
-        XCTAssertEqual(ByteFormatter.formatCompactSpeed(10_240), "10K")
-        XCTAssertEqual(ByteFormatter.formatCompactSpeed(35_840), "35K")
+        XCTAssertEqual(ByteFormatter.formatCompactSpeed(512), "512 B/s")
+        XCTAssertEqual(ByteFormatter.formatCompactSpeed(10_240), "10.0 K/s")
+        XCTAssertEqual(ByteFormatter.formatCompactSpeed(14_131), "13.8 K/s")
+        XCTAssertEqual(ByteFormatter.formatCompactSpeed(96_460), "94.2 K/s")
     }
 }
 

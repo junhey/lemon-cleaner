@@ -15,7 +15,7 @@ struct FreeUpTabView: View {
     var body: some View {
         VStack(spacing: 0) {
             recoverableSection
-            Divider().opacity(0.4)
+            Divider().opacity(0.35)
             memorySection
             ProcessListView(
                 apps: viewModel.processMemory.apps,
@@ -25,22 +25,28 @@ struct FreeUpTabView: View {
     }
 
     private var recoverableSection: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             VStack(alignment: .leading, spacing: 2) {
                 if viewModel.diskScan.isScanning {
                     Text("Scanning…")
-                        .font(.system(size: 16, weight: .semibold))
-                    ProgressView(value: viewModel.diskScan.progress)
-                        .frame(width: 100)
+                        .font(.system(size: 15, weight: .semibold))
+                    HStack(spacing: 6) {
+                        ProgressView(value: viewModel.diskScan.progress)
+                            .frame(width: 80)
+                        Text("\(Int(viewModel.diskScan.progress * 100))%")
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                            .foregroundStyle(.secondary)
+                            .monospacedDigit()
+                    }
                 } else if recoverableBytes == 0 {
                     Text("Nothing to clean")
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.system(size: 16, weight: .bold))
                     Text("Your Mac looks tidy")
-                        .font(.system(size: 12))
+                        .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                 } else {
                     Text(ByteFormatter.format(recoverableBytes))
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.system(size: 16, weight: .bold))
                     Text("can be recovered")
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
@@ -52,7 +58,8 @@ struct FreeUpTabView: View {
             }
             .disabled(viewModel.diskScan.isScanning || recoverableBytes == 0 || viewModel.isCleaning)
         }
-        .padding(14)
+        .padding(.horizontal, AppTheme.panelHorizontalPadding)
+        .padding(.vertical, 10)
     }
 
     private var memorySection: some View {
@@ -72,7 +79,7 @@ struct FreeUpTabView: View {
                 }
             }
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 8)
+        .padding(.horizontal, AppTheme.panelHorizontalPadding)
+        .padding(.vertical, 6)
     }
 }

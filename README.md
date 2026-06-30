@@ -8,7 +8,7 @@ A lightweight macOS menu bar utility for system monitoring and cleanup. Built wi
 
 ### Menu Bar
 
-- Compact single-line metrics: `CPU  MEM  SEN  ↑↓ network`
+- Two-row compact metrics: CPU / MEM / SEN / network speeds with column dividers
 - Click to open a minimal popup panel
 
 ### FreeUp Panel

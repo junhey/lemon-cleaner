@@ -5,54 +5,40 @@ struct SystemTabView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 12) {
-                temperatureRow
+            VStack(spacing: 10) {
                 storageRow
                 networkRow
                 NetworkGraphView(
                     uploadHistory: monitor.metrics.uploadHistory,
                     downloadHistory: monitor.metrics.downloadHistory
                 )
-                .frame(height: 80)
-                .padding(.horizontal, 16)
+                .frame(height: 64)
+                .padding(.horizontal, AppTheme.panelHorizontalPadding)
             }
-            .padding(.vertical, 8)
+            .padding(.vertical, 6)
         }
-    }
-
-    private var temperatureRow: some View {
-        HStack {
-            Image(systemName: "thermometer.medium")
-                .foregroundStyle(.secondary)
-            Text("CPU temperature")
-                .font(.system(size: 12))
-            Spacer()
-            Text(monitor.metrics.cpuTemperature.map { "\(Int($0))°C" } ?? "N/A")
-                .font(.system(size: 12, weight: .semibold, design: .rounded))
-                .foregroundStyle((monitor.metrics.cpuTemperature ?? 0) > 80 ? AppTheme.warningOrange : .primary)
-                .monospacedDigit()
-        }
-        .padding(.horizontal, 16)
     }
 
     private var storageRow: some View {
-        HStack {
+        HStack(spacing: 6) {
             Image(systemName: "internaldrive")
+                .font(.system(size: 11))
                 .foregroundStyle(.secondary)
             Text("Left \(ByteFormatter.format(Int64(monitor.metrics.diskFreeBytes))) / Total \(ByteFormatter.format(Int64(monitor.metrics.diskTotalBytes)))")
                 .font(.system(size: 12))
             Spacer()
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, AppTheme.panelHorizontalPadding)
     }
 
     private var networkRow: some View {
-        HStack {
+        HStack(spacing: 6) {
             Image(systemName: "globe")
+                .font(.system(size: 11))
                 .foregroundStyle(.secondary)
-            HStack(spacing: 8) {
+            HStack(spacing: 10) {
                 HStack(spacing: 2) {
-                    Image(systemName: "arrow.up").foregroundStyle(AppTheme.linkBlue)
+                    Image(systemName: "arrow.up").foregroundStyle(AppTheme.accent)
                     Text(ByteFormatter.formatSpeed(monitor.metrics.uploadSpeed))
                 }
                 HStack(spacing: 2) {
@@ -63,6 +49,6 @@ struct SystemTabView: View {
             .font(.system(size: 12))
             Spacer()
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, AppTheme.panelHorizontalPadding)
     }
 }

@@ -18,33 +18,33 @@ struct MainDashboardView: View {
     }
 
     private var brandingPanel: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             Spacer()
-            HexagonLogo(size: 100)
-            VStack(spacing: 6) {
+            HexagonLogo(size: 88)
+            VStack(spacing: 4) {
                 Text("Airy")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(.system(size: 26, weight: .bold))
                 Text("Lightweight Mac care")
-                    .font(.system(size: 13))
+                    .font(.system(size: 12))
                     .foregroundStyle(.secondary)
             }
             Spacer()
         }
-        .padding(32)
-        .frame(minWidth: 240)
+        .padding(28)
+        .frame(minWidth: 220)
         .background(AppTheme.sidebarBackground)
     }
 
     private var toolGrid: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                 ForEach(ToolKind.allCases) { tool in
                     ToolCard(tool: tool) {
                         selectedTool = tool
                     }
                 }
             }
-            .padding(24)
+            .padding(20)
         }
         .navigationTitle("Airy")
     }
@@ -103,21 +103,22 @@ struct ToolCard: View {
 
     var body: some View {
         Button(action: action) {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 6) {
                 Image(systemName: tool.iconName)
-                    .font(.system(size: 24))
+                    .font(.system(size: 20))
                     .foregroundStyle(.secondary)
                 Text(tool.title)
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: 14, weight: .semibold))
                 Text(tool.description)
-                    .font(.system(size: 12))
+                    .font(.system(size: 11))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.leading)
+                    .lineSpacing(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(16)
+            .padding(12)
             .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color(nsColor: .controlBackgroundColor))
             )
         }

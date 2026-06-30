@@ -3,7 +3,7 @@ import SwiftUI
 enum AppTheme {
     static let accent = Color(red: 0.35, green: 0.62, blue: 0.98)
     static let cleanGreen = Color(red: 0.22, green: 0.72, blue: 0.45)
-    static let linkBlue = Color(red: 0.0, green: 0.478, blue: 1.0)
+    static let linkBlue = accent
     static let warningOrange = Color(red: 1.0, green: 0.55, blue: 0.2)
     static let panelBackground = Color(nsColor: .windowBackgroundColor)
     static let sidebarBackground = Color(nsColor: .controlBackgroundColor)
@@ -14,6 +14,7 @@ enum AppTheme {
     static let panelWidth: CGFloat = 320
     static let panelHeight: CGFloat = 360
     static let panelCornerRadius: CGFloat = 10
+    static let panelHorizontalPadding: CGFloat = 12
 }
 
 struct PrimaryButton: View {

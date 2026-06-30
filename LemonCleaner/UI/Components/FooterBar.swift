@@ -11,8 +11,8 @@ struct FooterBar: View {
             Button(action: onLaunch) {
                 Text("Open Airy")
                     .font(.system(size: 13, weight: .medium))
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 6)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 5)
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(Color.white)
@@ -22,8 +22,8 @@ struct FooterBar: View {
             .buttonStyle(.plain)
             Spacer()
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
+        .padding(.horizontal, AppTheme.panelHorizontalPadding)
+        .padding(.vertical, 8)
         .background(AppTheme.footerBackground)
     }
 }
