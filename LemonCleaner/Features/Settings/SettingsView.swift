@@ -22,7 +22,7 @@ struct SettingsView: View {
             Section("About") {
                 LabeledContent("Version", value: "0.0.2")
                 LabeledContent("App", value: "Airy")
-                LabeledContent("Bundle ID", value: "com.junhey.LemonCleaner")
+                LabeledContent("Bundle ID", value: "com.junhey.Airy")
             }
         }
         .formStyle(.grouped)

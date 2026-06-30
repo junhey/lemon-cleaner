@@ -3,28 +3,28 @@
   <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
     <BuildActionEntries>
       <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="A4BEF206C5924F6D915C34EF" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="6E2E40183FB341C298B91531" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
       </BuildActionEntry>
       <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="NO">
-        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="70556CB5A847495B878A1298" BuildableName="LemonCleanerTests.xctest" BlueprintName="LemonCleanerTests" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="AC5B547571B94C7FA1A76B40" BuildableName="LemonCleanerTests.xctest" BlueprintName="LemonCleanerTests" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
       </BuildActionEntry>
     </BuildActionEntries>
   </BuildAction>
   <TestAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB">
     <Testables>
       <TestableReference skipped="NO">
-        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="70556CB5A847495B878A1298" BuildableName="LemonCleanerTests.xctest" BlueprintName="LemonCleanerTests" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="AC5B547571B94C7FA1A76B40" BuildableName="LemonCleanerTests.xctest" BlueprintName="LemonCleanerTests" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
       </TestableReference>
     </Testables>
   </TestAction>
   <LaunchAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO">
     <BuildableProductRunnable runnableDebuggingMode="0">
-      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="A4BEF206C5924F6D915C34EF" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
+      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="6E2E40183FB341C298B91531" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
     </BuildableProductRunnable>
   </LaunchAction>
   <ProfileAction buildConfiguration="Release" shouldUseLaunchSchemeArgsEnv="YES">
     <BuildableProductRunnable runnableDebuggingMode="0">
-      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="A4BEF206C5924F6D915C34EF" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
+      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="6E2E40183FB341C298B91531" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
     </BuildableProductRunnable>
   </ProfileAction>
 </Scheme>
