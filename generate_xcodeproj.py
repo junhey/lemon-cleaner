@@ -6,6 +6,8 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.join(ROOT, "LemonCleaner")
 TEST_DIR = os.path.join(ROOT, "LemonCleanerTests")
 OUT = os.path.join(ROOT, "LemonCleaner.xcodeproj", "project.pbxproj")
+APP_TARGET_NAME = "Airy"
+APP_PRODUCT_NAME = "Airy.app"
 
 
 def uid():
@@ -66,13 +68,13 @@ lines.append("\t\t\tisa = PBXContainerItemProxy;")
 lines.append(f"\t\t\tcontainerPortal = {ids['project']} /* Project object */;")
 lines.append("\t\t\tproxyType = 1;")
 lines.append(f"\t\t\tremoteGlobalIDString = {ids['app_target']};")
-lines.append("\t\t\tremoteInfo = LemonCleaner;")
+lines.append(f"\t\t\tremoteInfo = {APP_TARGET_NAME};")
 lines.append("\t\t};")
 lines.append("/* End PBXContainerItemProxy section */")
 lines.append("")
 lines.append("/* Begin PBXFileReference section */")
 lines.append(
-    f"\t\t{ids['app_product']} /* LemonCleaner.app */ = {{isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LemonCleaner.app; sourceTree = BUILT_PRODUCTS_DIR; }};"
+    f"\t\t{ids['app_product']} /* {APP_PRODUCT_NAME} */ = {{isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = {APP_PRODUCT_NAME}; sourceTree = BUILT_PRODUCTS_DIR; }};"
 )
 lines.append(
     f"\t\t{ids['test_product']} /* LemonCleanerTests.xctest */ = {{isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LemonCleanerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; }};"
@@ -158,7 +160,7 @@ test_children = [f"\t\t\t\t{file_ref[p]} /* {os.path.basename(p)} */," for p in 
 make_group(ids["test_group"], "LemonCleanerTests", "LemonCleanerTests", test_children)
 
 products_children = [
-    f"\t\t\t\t{ids['app_product']} /* LemonCleaner.app */,",
+    f"\t\t\t\t{ids['app_product']} /* {APP_PRODUCT_NAME} */,",
     f"\t\t\t\t{ids['test_product']} /* LemonCleanerTests.xctest */,",
 ]
 make_group(ids["products_group"], "Products", "", products_children)
@@ -173,14 +175,17 @@ make_group(ids["main_group"], "", "", main_children)
 # Write xcscheme
 scheme_dir = os.path.join(ROOT, "LemonCleaner.xcodeproj", "xcshareddata", "xcschemes")
 os.makedirs(scheme_dir, exist_ok=True)
-scheme_path = os.path.join(scheme_dir, "LemonCleaner.xcscheme")
+old_scheme = os.path.join(scheme_dir, "LemonCleaner.xcscheme")
+if os.path.exists(old_scheme):
+    os.remove(old_scheme)
+scheme_path = os.path.join(scheme_dir, f"{APP_TARGET_NAME}.xcscheme")
 with open(scheme_path, "w", encoding="utf-8") as f:
     f.write(f'''<?xml version="1.0" encoding="UTF-8"?>
 <Scheme LastUpgradeVersion="1640" version="1.7">
   <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
     <BuildActionEntries>
       <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
-        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ids['app_target']}" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ids['app_target']}" BuildableName="{APP_PRODUCT_NAME}" BlueprintName="{APP_TARGET_NAME}" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
       </BuildActionEntry>
       <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="NO">
         <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ids['test_target']}" BuildableName="LemonCleanerTests.xctest" BlueprintName="LemonCleanerTests" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
@@ -196,12 +201,12 @@ with open(scheme_path, "w", encoding="utf-8") as f:
   </TestAction>
   <LaunchAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO">
     <BuildableProductRunnable runnableDebuggingMode="0">
-      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ids['app_target']}" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
+      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ids['app_target']}" BuildableName="{APP_PRODUCT_NAME}" BlueprintName="{APP_TARGET_NAME}" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
     </BuildableProductRunnable>
   </LaunchAction>
   <ProfileAction buildConfiguration="Release" shouldUseLaunchSchemeArgsEnv="YES">
     <BuildableProductRunnable runnableDebuggingMode="0">
-      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ids['app_target']}" BuildableName="LemonCleaner.app" BlueprintName="LemonCleaner" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
+      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ids['app_target']}" BuildableName="{APP_PRODUCT_NAME}" BlueprintName="{APP_TARGET_NAME}" ReferencedContainer="container:LemonCleaner.xcodeproj"/>
     </BuildableProductRunnable>
   </ProfileAction>
 </Scheme>
@@ -210,9 +215,9 @@ with open(scheme_path, "w", encoding="utf-8") as f:
 lines.append("/* End PBXGroup section */")
 lines.append("")
 lines.append("/* Begin PBXNativeTarget section */")
-lines.append(f"\t\t{ids['app_target']} /* LemonCleaner */ = {{")
+lines.append(f"\t\t{ids['app_target']} /* {APP_TARGET_NAME} */ = {{")
 lines.append("\t\t\tisa = PBXNativeTarget;")
-lines.append(f"\t\t\tbuildConfigurationList = {ids['app_cfg']} /* Build configuration list for PBXNativeTarget \"LemonCleaner\" */;")
+lines.append(f"\t\t\tbuildConfigurationList = {ids['app_cfg']} /* Build configuration list for PBXNativeTarget \"{APP_TARGET_NAME}\" */;")
 lines.append("\t\t\tbuildPhases = (")
 lines.append(f"\t\t\t\t{ids['sources_app']} /* Sources */,")
 lines.append(f"\t\t\t\t{ids['frameworks_app']} /* Frameworks */,")
@@ -222,9 +227,9 @@ lines.append("\t\t\tbuildRules = (")
 lines.append("\t\t\t);")
 lines.append("\t\t\tdependencies = (")
 lines.append("\t\t\t);")
-lines.append('\t\t\tname = LemonCleaner;')
-lines.append(f"\t\t\tproductName = LemonCleaner;")
-lines.append(f"\t\t\tproductReference = {ids['app_product']} /* LemonCleaner.app */;")
+lines.append(f'\t\t\tname = {APP_TARGET_NAME};')
+lines.append(f"\t\t\tproductName = {APP_TARGET_NAME};")
+lines.append(f"\t\t\tproductReference = {ids['app_product']} /* {APP_PRODUCT_NAME} */;")
 lines.append('\t\t\tproductType = "com.apple.product-type.application";')
 lines.append("\t\t};")
 
@@ -278,7 +283,7 @@ lines.append(f"\t\t\tproductRefGroup = {ids['products_group']} /* Products */;")
 lines.append('\t\t\tprojectDirPath = "";')
 lines.append('\t\t\tprojectRoot = "";')
 lines.append("\t\t\ttargets = (")
-lines.append(f"\t\t\t\t{ids['app_target']} /* LemonCleaner */,")
+lines.append(f"\t\t\t\t{ids['app_target']} /* {APP_TARGET_NAME} */,")
 lines.append(f"\t\t\t\t{ids['test_target']} /* LemonCleanerTests */,")
 lines.append("\t\t\t);")
 lines.append("\t\t};")
@@ -320,7 +325,7 @@ lines.append("/* Begin PBXTargetDependency section */")
 dep = uid()
 lines.append(f"\t\t{ids['test_dep']} /* PBXTargetDependency */ = {{")
 lines.append("\t\t\tisa = PBXTargetDependency;")
-lines.append(f"\t\t\ttarget = {ids['app_target']} /* LemonCleaner */;")
+lines.append(f"\t\t\ttarget = {ids['app_target']} /* {APP_TARGET_NAME} */;")
 lines.append(f"\t\t\ttargetProxy = {proxy} /* PBXContainerItemProxy */;")
 lines.append("\t\t};")
 lines.append("/* End PBXTargetDependency section */")
@@ -371,14 +376,14 @@ app_common = {
     "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
     "CODE_SIGN_STYLE": "Automatic",
     "COMBINE_HIDPI_IMAGES": "YES",
-    "CURRENT_PROJECT_VERSION": "2",
+    "CURRENT_PROJECT_VERSION": "3",
     "ENABLE_PREVIEWS": "YES",
     "GENERATE_INFOPLIST_FILE": "NO",
     "INFOPLIST_FILE": "LemonCleaner/Info.plist",
     "LD_RUNPATH_SEARCH_PATHS": "$(inherited) @executable_path/../Frameworks",
-    "MARKETING_VERSION": "0.0.2",
+    "MARKETING_VERSION": "0.0.3",
     "PRODUCT_BUNDLE_IDENTIFIER": "com.junhey.Airy",
-    "PRODUCT_NAME": "$(TARGET_NAME)",
+    "PRODUCT_NAME": APP_TARGET_NAME,
     "SWIFT_EMIT_LOC_STRINGS": "YES",
     "SWIFT_VERSION": "5.9",
 }
@@ -388,14 +393,14 @@ cfg(ids["release_app"], "Release", app_common)
 test_common = {
     "BUNDLE_LOADER": "$(TEST_HOST)",
     "CODE_SIGN_STYLE": "Automatic",
-    "CURRENT_PROJECT_VERSION": "2",
+    "CURRENT_PROJECT_VERSION": "3",
     "GENERATE_INFOPLIST_FILE": "YES",
     "MACOSX_DEPLOYMENT_TARGET": "13.0",
-    "MARKETING_VERSION": "0.0.2",
+    "MARKETING_VERSION": "0.0.3",
     "PRODUCT_BUNDLE_IDENTIFIER": "com.junhey.AiryTests",
     "PRODUCT_NAME": "$(TARGET_NAME)",
     "SWIFT_VERSION": "5.9",
-    "TEST_HOST": "$(BUILT_PRODUCTS_DIR)/LemonCleaner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LemonCleaner",
+    "TEST_HOST": f"$(BUILT_PRODUCTS_DIR)/{APP_PRODUCT_NAME}/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/{APP_TARGET_NAME}",
 }
 cfg(ids["debug_test"], "Debug", test_common)
 cfg(ids["release_test"], "Release", test_common)
@@ -405,7 +410,7 @@ lines.append("")
 lines.append("/* Begin XCConfigurationList section */")
 for list_id, name, cfgs in [
     (ids["proj_cfg"], "Project", [(ids["debug_proj"], "Debug"), (ids["release_proj"], "Release")]),
-    (ids["app_cfg"], "LemonCleaner", [(ids["debug_app"], "Debug"), (ids["release_app"], "Release")]),
+    (ids["app_cfg"], APP_TARGET_NAME, [(ids["debug_app"], "Debug"), (ids["release_app"], "Release")]),
     (ids["test_cfg"], "LemonCleanerTests", [(ids["debug_test"], "Debug"), (ids["release_test"], "Release")]),
 ]:
     lines.append(f"\t\t{list_id} /* Build configuration list for PBXProject \"{name}\" */ = {{")

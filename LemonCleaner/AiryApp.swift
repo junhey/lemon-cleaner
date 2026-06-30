@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct LemonCleanerApp: App {
+struct AiryApp: App {
     @StateObject private var monitor = SystemMonitorService()
     @StateObject private var settings = UserSettings.shared
 

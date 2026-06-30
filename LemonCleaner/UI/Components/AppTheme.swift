@@ -2,7 +2,6 @@ import SwiftUI
 
 enum AppTheme {
     static let accent = Color(red: 0.35, green: 0.62, blue: 0.98)
-    static let lemonAccent = accent
     static let cleanGreen = Color(red: 0.22, green: 0.72, blue: 0.45)
     static let linkBlue = Color(red: 0.0, green: 0.478, blue: 1.0)
     static let warningOrange = Color(red: 1.0, green: 0.55, blue: 0.2)

@@ -1,5 +1,5 @@
 import XCTest
-@testable import LemonCleaner
+@testable import Airy
 
 final class ByteFormatterTests: XCTestCase {
     func testFormatBytes() {

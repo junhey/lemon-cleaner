@@ -58,23 +58,6 @@ struct DuplicateFileToolView: View {
     }
 }
 
-struct SimilarPhotoToolView: View {
-    @StateObject private var viewModel = ToolScanViewModel(scanner: SimilarPhotoScanner())
-
-    var body: some View {
-        ScanResultListView(
-            result: viewModel.result,
-            isScanning: viewModel.isScanning,
-            progress: viewModel.progress,
-            selectedItems: $viewModel.selectedItems,
-            onScan: { Task { await viewModel.scan() } },
-            onClean: { Task { await viewModel.clean() } }
-        )
-        .navigationTitle("Similar Photos")
-        .task { await viewModel.scan() }
-    }
-}
-
 struct PrivacyCleanToolView: View {
     @StateObject private var viewModel = ToolScanViewModel(scanner: PrivacyCleanService())
 

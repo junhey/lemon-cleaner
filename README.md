@@ -33,9 +33,17 @@ macOS 菜单栏系统清理与监控工具（原 Lemon Cleaner），原生 Swift
 ```bash
 python3 generate_xcodeproj.py
 
-xcodebuild -project LemonCleaner.xcodeproj -scheme LemonCleaner -configuration Release build
+xcodebuild -project LemonCleaner.xcodeproj -scheme Airy -configuration Release build
 
-xcodebuild -project LemonCleaner.xcodeproj -scheme LemonCleaner test
+xcodebuild -project LemonCleaner.xcodeproj -scheme Airy test
+```
+
+## 安装
+
+构建完成后，将 `build/Release/Airy.app` 拖入「应用程序」文件夹，或：
+
+```bash
+cp -R build/Release/Airy.app /Applications/
 ```
 
 ## License

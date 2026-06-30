@@ -34,50 +34,6 @@ protocol ScanningService {
     func clean(items: [ScanItem]) async throws -> Int64
 }
 
-enum DuplicateGroup: Identifiable {
-    case group(id: String, items: [ScanItem])
-
-    var id: String {
-        switch self {
-        case .group(let id, _): return id
-        }
-    }
-
-    var items: [ScanItem] {
-        switch self {
-        case .group(_, let items): return items
-        }
-    }
-
-    var wastedBytes: Int64 {
-        let sizes = items.map(\.sizeBytes)
-        guard let max = sizes.max(), sizes.count > 1 else { return 0 }
-        return max * Int64(sizes.count - 1)
-    }
-}
-
-struct PhotoGroup: Identifiable {
-    let id: String
-    let items: [ScanItem]
-}
-
-struct StartupItem: Identifiable {
-    let id: String
-    let name: String
-    let path: String
-    let isEnabled: Bool
-    let source: String
-}
-
-struct AppBundleInfo: Identifiable {
-    let id: String
-    let name: String
-    let path: String
-    let bundleIdentifier: String
-    let sizeBytes: Int64
-    let relatedFiles: [ScanItem]
-}
-
 struct DiskDirectorySize: Identifiable {
     let id: String
     let name: String
