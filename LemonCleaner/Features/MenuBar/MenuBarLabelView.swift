@@ -5,18 +5,20 @@ struct MenuBarLabelView: View {
 
     var body: some View {
         Text(compactLine)
-            .font(.system(size: 10, weight: .medium, design: .rounded))
+            .font(.system(size: 9, weight: .medium, design: .rounded))
             .monospacedDigit()
             .foregroundStyle(.primary)
-            .padding(.horizontal, 4)
+            .lineLimit(1)
+            .fixedSize()
+            .padding(.horizontal, 2)
     }
 
     private var compactLine: String {
-        let cpu = ByteFormatter.formatPercent(metrics.cpuUsage)
-        let mem = ByteFormatter.formatPercent(metrics.memoryUsage)
-        let sen = metrics.cpuTemperature.map { "\(Int($0))°C" } ?? "N/A"
-        let up = ByteFormatter.formatSpeed(metrics.uploadSpeed)
-        let down = ByteFormatter.formatSpeed(metrics.downloadSpeed)
-        return "\(cpu) CPU  \(mem) MEM  \(sen) SEN  ↑ \(up) ↓ \(down)"
+        let cpu = Int(metrics.cpuUsage.rounded())
+        let mem = Int(metrics.memoryUsage.rounded())
+        let sen = metrics.cpuTemperature.map { "\(Int($0))" } ?? "–"
+        let up = ByteFormatter.formatCompactSpeed(metrics.uploadSpeed)
+        let down = ByteFormatter.formatCompactSpeed(metrics.downloadSpeed)
+        return "\(cpu)|\(mem)|\(sen)|↑\(up) ↓\(down)"
     }
 }

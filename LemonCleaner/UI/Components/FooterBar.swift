@@ -30,22 +30,82 @@ struct FooterBar: View {
 
 struct SettingsMenu: View {
     var body: some View {
-        Menu {
-            Button("Preferences…") {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-            }
-            Divider()
-            Button("About Airy") {
-                NSApp.orderFrontStandardAboutPanel(nil)
-            }
-            Button("Quit") {
-                NSApp.terminate(nil)
-            }
-        } label: {
-            Image(systemName: "gearshape")
-                .font(.system(size: 16))
-                .foregroundStyle(.secondary)
+        SettingsMenuButton()
+    }
+}
+
+private struct SettingsMenuButton: NSViewRepresentable {
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    func makeNSView(context: Context) -> NSView {
+        let container = NSView(frame: .zero)
+        let button = NSButton(frame: .zero)
+        button.bezelStyle = .inline
+        button.isBordered = false
+        button.imagePosition = .imageLeft
+        button.target = context.coordinator
+        button.action = #selector(Coordinator.showMenu(_:))
+        button.image = menuBarImage()
+        button.toolTip = "Settings"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(button)
+        NSLayoutConstraint.activate([
+            button.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            button.topAnchor.constraint(equalTo: container.topAnchor),
+            button.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+        ])
+        context.coordinator.button = button
+        return container
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {}
+
+    private func menuBarImage() -> NSImage {
+        let config = NSImage.SymbolConfiguration(pointSize: 13, weight: .regular)
+        let gear = NSImage(systemSymbolName: "gearshape", accessibilityDescription: "Settings")?
+            .withSymbolConfiguration(config) ?? NSImage()
+        let chevron = NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?
+            .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 8, weight: .semibold)) ?? NSImage()
+        let size = NSSize(width: gear.size.width + chevron.size.width + 2, height: max(gear.size.height, chevron.size.height))
+        let composite = NSImage(size: size)
+        composite.lockFocus()
+        gear.draw(at: NSPoint(x: 0, y: (size.height - gear.size.height) / 2), from: .zero, operation: .sourceOver, fraction: 0.55)
+        chevron.draw(at: NSPoint(x: gear.size.width + 2, y: (size.height - chevron.size.height) / 2), from: .zero, operation: .sourceOver, fraction: 0.45)
+        composite.unlockFocus()
+        return composite
+    }
+
+    final class Coordinator: NSObject {
+        weak var button: NSButton?
+
+        @objc func showMenu(_ sender: NSButton) {
+            let menu = NSMenu()
+            let prefs = NSMenuItem(title: "Preferences…", action: #selector(openPreferences), keyEquivalent: ",")
+            prefs.target = self
+            menu.addItem(prefs)
+            menu.addItem(.separator())
+            let about = NSMenuItem(title: "About Airy", action: #selector(showAbout), keyEquivalent: "")
+            about.target = self
+            menu.addItem(about)
+            let quit = NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q")
+            quit.target = self
+            menu.addItem(quit)
+            menu.popUp(positioning: nil, at: NSPoint(x: 0, y: sender.bounds.height + 4), in: sender)
         }
-        .menuStyle(.borderlessButton)
+
+        @objc private func openPreferences() {
+            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        }
+
+        @objc private func showAbout() {
+            NSApp.orderFrontStandardAboutPanel(nil)
+        }
+
+        @objc private func quitApp() {
+            NSApp.terminate(nil)
+        }
     }
 }

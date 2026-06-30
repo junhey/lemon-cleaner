@@ -12,7 +12,7 @@ enum AppTheme {
     static let cardShadow = Color.black.opacity(0.04)
 
     static let panelWidth: CGFloat = 320
-    static let panelHeight: CGFloat = 420
+    static let panelHeight: CGFloat = 360
     static let panelCornerRadius: CGFloat = 10
 }
 

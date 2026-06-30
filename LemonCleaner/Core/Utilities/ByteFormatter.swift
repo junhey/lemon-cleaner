@@ -36,4 +36,17 @@ enum ByteFormatter {
     static func formatPercent(_ value: Double) -> String {
         "\(Int(value.rounded()))%"
     }
+
+    /// Compact speed for menu bar: `10K`, `1.2M`, `512`
+    static func formatCompactSpeed(_ bytesPerSecond: Double) -> String {
+        if bytesPerSecond < 1024 {
+            return "\(Int(bytesPerSecond.rounded()))"
+        }
+        if bytesPerSecond < 1024 * 1024 {
+            let kb = bytesPerSecond / 1024
+            return kb >= 100 ? String(format: "%.0fK", kb) : String(format: "%.0fK", kb.rounded())
+        }
+        let mb = bytesPerSecond / 1024 / 1024
+        return mb >= 10 ? String(format: "%.0fM", mb) : String(format: "%.1fM", mb)
+    }
 }

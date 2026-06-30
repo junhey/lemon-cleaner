@@ -16,6 +16,12 @@ final class ByteFormatterTests: XCTestCase {
     func testFormatPercent() {
         XCTAssertEqual(ByteFormatter.formatPercent(74.6), "75%")
     }
+
+    func testFormatCompactSpeed() {
+        XCTAssertEqual(ByteFormatter.formatCompactSpeed(512), "512")
+        XCTAssertEqual(ByteFormatter.formatCompactSpeed(10_240), "10K")
+        XCTAssertEqual(ByteFormatter.formatCompactSpeed(35_840), "35K")
+    }
 }
 
 final class ScanResultTests: XCTestCase {
