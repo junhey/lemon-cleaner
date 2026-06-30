@@ -14,13 +14,13 @@ struct HexagonLogo: View {
             HexagonShape()
                 .fill(
                     LinearGradient(
-                        colors: [Color(red: 1, green: 0.85, blue: 0.3), AppTheme.lemonAccent],
+                        colors: [Color(red: 0.7, green: 0.85, blue: 1.0), AppTheme.accent],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
                 )
                 .frame(width: size * 0.55, height: size * 0.55)
-                .shadow(color: AppTheme.lemonAccent.opacity(0.3), radius: 12)
+                .shadow(color: AppTheme.accent.opacity(0.2), radius: 8)
             HexagonShape()
                 .stroke(Color.white.opacity(0.5), lineWidth: 2)
                 .frame(width: size * 0.35, height: size * 0.35)

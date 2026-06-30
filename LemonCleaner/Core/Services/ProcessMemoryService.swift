@@ -9,7 +9,7 @@ final class ProcessMemoryService: ObservableObject {
     @Published var lastReleaseMessage: String?
 
     func refresh() {
-        apps = ProcessMemoryReader.topApps(limit: 8)
+        apps = ProcessMemoryReader.topApps(limit: 6)
     }
 
     func releaseMemory() async {

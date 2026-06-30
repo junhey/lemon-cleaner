@@ -13,33 +13,36 @@ struct FreeUpTabView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                recoverableSection
-                Divider().padding(.horizontal, 16)
-                memorySection
-                ProcessListView(
-                    apps: viewModel.processMemory.apps,
-                    memoryPercent: memoryPercent
-                )
-            }
+        VStack(spacing: 0) {
+            recoverableSection
+            Divider().opacity(0.4)
+            memorySection
+            ProcessListView(
+                apps: viewModel.processMemory.apps,
+                memoryPercent: memoryPercent
+            )
         }
     }
 
     private var recoverableSection: some View {
-        HStack(spacing: 12) {
-            HexagonLogo(size: 48)
+        HStack(spacing: 10) {
             VStack(alignment: .leading, spacing: 2) {
                 if viewModel.diskScan.isScanning {
                     Text("Scanning…")
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.system(size: 16, weight: .semibold))
                     ProgressView(value: viewModel.diskScan.progress)
-                        .frame(width: 120)
+                        .frame(width: 100)
+                } else if recoverableBytes == 0 {
+                    Text("Nothing to clean")
+                        .font(.system(size: 18, weight: .bold))
+                    Text("Your Mac looks tidy")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
                 } else {
                     Text(ByteFormatter.format(recoverableBytes))
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.system(size: 18, weight: .bold))
                     Text("can be recovered")
-                        .font(.system(size: 12))
+                        .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -49,17 +52,16 @@ struct FreeUpTabView: View {
             }
             .disabled(viewModel.diskScan.isScanning || recoverableBytes == 0 || viewModel.isCleaning)
         }
-        .padding(16)
+        .padding(14)
     }
 
     private var memorySection: some View {
         HStack {
-            Image(systemName: "memorychip")
+            Text("Memory")
+                .font(.system(size: 12))
                 .foregroundStyle(.secondary)
-            Text("Memory usage")
-                .font(.system(size: 13))
             Text(ByteFormatter.formatPercent(memoryPercent))
-                .font(.system(size: 13, weight: .semibold))
+                .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(memoryPercent > 70 ? AppTheme.warningOrange : .primary)
             Spacer()
             if viewModel.processMemory.isReleasing {
@@ -70,7 +72,7 @@ struct FreeUpTabView: View {
                 }
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 8)
     }
 }

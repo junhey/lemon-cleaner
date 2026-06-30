@@ -9,9 +9,6 @@ struct SettingsView: View {
                 Stepper("Large file threshold: \(settings.largeFileThresholdMB) MB", value: $settings.largeFileThresholdMB, in: 10...500, step: 10)
                 Toggle("Scan full disk (requires Full Disk Access)", isOn: $settings.scanFullDisk)
             }
-            Section("Privacy") {
-                Toggle("Show privacy banner", isOn: $settings.showPrivacyBanner)
-            }
             Section("Permissions") {
                 Text("Grant Full Disk Access in System Settings → Privacy & Security to scan all files.")
                     .font(.caption)
@@ -23,11 +20,12 @@ struct SettingsView: View {
                 }
             }
             Section("About") {
-                LabeledContent("Version", value: "0.0.1")
+                LabeledContent("Version", value: "0.0.2")
+                LabeledContent("App", value: "Airy")
                 LabeledContent("Bundle ID", value: "com.junhey.LemonCleaner")
             }
         }
         .formStyle(.grouped)
-        .frame(width: 420, height: 320)
+        .frame(width: 420, height: 300)
     }
 }

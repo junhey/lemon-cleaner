@@ -11,14 +11,12 @@ final class PopupPanelViewModel: ObservableObject {
     let diskScan = DiskScanService()
     let processMemory = ProcessMemoryService()
     let cacheClean = CacheCleanService()
-    let privacyMonitor = PrivacyMonitorService()
 
     func onAppear(monitor: SystemMonitorService) {
         monitor.start()
         Task {
             await diskScan.scan()
             processMemory.refresh()
-            privacyMonitor.refresh()
         }
     }
 
@@ -49,7 +47,6 @@ struct PopupPanelView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            MenuBarStatsBar(metrics: monitor.metrics)
             TabHeader(selectedTab: $viewModel.selectedTab)
 
             Group {
@@ -57,19 +54,12 @@ struct PopupPanelView: View {
                 case .freeUp:
                     FreeUpTabView(viewModel: viewModel)
                 case .system:
-                    SystemTabView(monitor: monitor, privacyMonitor: viewModel.privacyMonitor)
+                    SystemTabView(monitor: monitor)
                 }
             }
             .frame(maxHeight: .infinity)
 
-            FooterBar(
-                onLaunch: { openWindow(id: "main") },
-                onFeedback: {
-                    if let url = URL(string: "https://github.com/junhey/lemon-cleaner/issues") {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-            )
+            FooterBar(onLaunch: { openWindow(id: "main") })
         }
         .frame(width: AppTheme.panelWidth, height: AppTheme.panelHeight)
         .background(AppTheme.panelBackground)

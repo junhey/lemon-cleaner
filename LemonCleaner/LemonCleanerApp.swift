@@ -14,10 +14,10 @@ struct LemonCleanerApp: App {
         }
         .menuBarExtraStyle(.window)
 
-        WindowGroup("Lemon Cleaner", id: "main") {
+        WindowGroup("Airy", id: "main") {
             MainDashboardView()
         }
-        .defaultSize(width: 900, height: 600)
+        .defaultSize(width: 800, height: 520)
 
         Settings {
             SettingsView()

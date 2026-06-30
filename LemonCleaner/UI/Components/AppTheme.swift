@@ -1,35 +1,20 @@
 import SwiftUI
 
 enum AppTheme {
-    static let lemonAccent = Color(red: 1.0, green: 0.604, blue: 0.18)
-    static let cleanGreen = Color(red: 0.204, green: 0.78, blue: 0.349)
+    static let accent = Color(red: 0.35, green: 0.62, blue: 0.98)
+    static let lemonAccent = accent
+    static let cleanGreen = Color(red: 0.22, green: 0.72, blue: 0.45)
     static let linkBlue = Color(red: 0.0, green: 0.478, blue: 1.0)
-    static let warningOrange = Color(red: 1.0, green: 0.584, blue: 0.0)
+    static let warningOrange = Color(red: 1.0, green: 0.55, blue: 0.2)
     static let panelBackground = Color(nsColor: .windowBackgroundColor)
     static let sidebarBackground = Color(nsColor: .controlBackgroundColor)
-    static let footerBackground = Color(nsColor: .controlBackgroundColor)
+    static let footerBackground = Color(nsColor: .controlBackgroundColor).opacity(0.6)
     static let subtleText = Color.secondary
-    static let cardShadow = Color.black.opacity(0.06)
+    static let cardShadow = Color.black.opacity(0.04)
 
-    static let panelWidth: CGFloat = 360
-    static let panelHeight: CGFloat = 520
-    static let panelCornerRadius: CGFloat = 12
-}
-
-struct RoundedCard<Content: View>: View {
-    let content: Content
-
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-    }
-
-    var body: some View {
-        content
-            .background(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color(nsColor: .controlBackgroundColor))
-            )
-    }
+    static let panelWidth: CGFloat = 320
+    static let panelHeight: CGFloat = 420
+    static let panelCornerRadius: CGFloat = 10
 }
 
 struct PrimaryButton: View {
@@ -40,10 +25,10 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.system(size: 13, weight: .semibold))
+                .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(.white)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 6)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 5)
                 .background(Capsule().fill(color))
         }
         .buttonStyle(.plain)
@@ -57,7 +42,7 @@ struct LinkButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.system(size: 12, weight: .medium))
+                .font(.system(size: 11, weight: .medium))
                 .foregroundStyle(AppTheme.linkBlue)
         }
         .buttonStyle(.plain)

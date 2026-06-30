@@ -4,17 +4,17 @@ struct TabHeader: View {
     @Binding var selectedTab: PopupTab
 
     var body: some View {
-        HStack(spacing: 24) {
+        HStack(spacing: 20) {
             ForEach(PopupTab.allCases) { tab in
                 Button {
                     selectedTab = tab
                 } label: {
-                    VStack(spacing: 6) {
+                    VStack(spacing: 4) {
                         Text(tab.title)
-                            .font(.system(size: 14, weight: selectedTab == tab ? .semibold : .regular))
+                            .font(.system(size: 13, weight: selectedTab == tab ? .semibold : .regular))
                             .foregroundStyle(selectedTab == tab ? .primary : .secondary)
                         Rectangle()
-                            .fill(selectedTab == tab ? AppTheme.lemonAccent : .clear)
+                            .fill(selectedTab == tab ? AppTheme.accent : .clear)
                             .frame(height: 2)
                     }
                 }
@@ -22,8 +22,8 @@ struct TabHeader: View {
             }
             Spacer()
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 8)
+        .padding(.horizontal, 14)
+        .padding(.top, 6)
     }
 }
 
